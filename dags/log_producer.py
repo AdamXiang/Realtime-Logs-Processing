@@ -58,7 +58,7 @@ def delivery_report(err, msg):
     logger.info(f'Message delivered to {msg.topic()} [{msg.partition()}]')
 
 
-def product_logs(**content):
+def product_logs(**context):
   '''
     Product log entries into Kafka
   '''
