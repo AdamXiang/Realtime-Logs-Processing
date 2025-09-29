@@ -3,9 +3,8 @@ from airflow import DAG
 from airflow.operators.python import PythonOperator
 from confluent_kafka import Producer
 from faker import Faker
-import boto3
 import logging
-import json
+from .utils import get_secret
 import random
 
 
@@ -57,21 +56,6 @@ def delivery_report(err, msg):
     logger.error(f'Message delivery failed: {err}')
   else:
     logger.info(f'Message delivered to {msg.topic()} [{msg.partition()}]')
-
-
-def get_secret(secret_name, region_name='us-east-1'):
-  '''
-    Retrieve secrets from AWS Secrets Manager
-  '''
-  session = boto3.session.Session()
-  client = session.client(service_name='secretsmanager', region_name=region_name)
-
-  try:
-    response = client.get_secret_value(SecretId=secret_name)
-    return json.load(response['SecretString'])
-  except Exception as e:
-    logger.error(f'Secret retrival error: {e}')
-    raise
 
 
 def product_logs(**content):
