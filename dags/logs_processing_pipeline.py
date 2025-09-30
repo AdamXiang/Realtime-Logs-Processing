@@ -59,7 +59,7 @@ def consume_and_index_logs(**context):
   consumer = Consumer(consumer_config)         # Create Kafka consumer
   es = Elasticsearch(**es_config)              # Create Elasticsearch client
 
-  topic = 'MWAA_Side_Project_Secret'           # Topic to consume from (string literal here)
+  topic = 'website_logs'           # Topic to consume from (string literal here)
 
   consumer.subscribe([topic])                  # Subscribe consumer to the topic
 
